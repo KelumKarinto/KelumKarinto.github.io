@@ -5,27 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Homepage</title>
     <style>
+        @keyframes fall {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 1rem;
-            text-align: center;
+            overflow: hidden; /* Prevent scroll bars */
         }
         nav {
             margin: 0;
-            padding: 0;
+            padding: 1rem;
             text-align: center;
-            background-color: #333;
+            background: linear-gradient(45deg, #160c55, #4b31b5, #bbd2e1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         nav ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
         nav ul li {
             display: inline;
@@ -36,12 +40,53 @@
             padding: 1rem;
             text-decoration: none;
             display: inline-block;
+            background-color: #333;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+            box-shadow: 0 5px #9b1d2e;
+            transition: all 0.3s ease;
         }
         nav ul li a:hover {
             background-color: #575757;
+            box-shadow: 0 3px #9b1d2e;
+            transform: translateY(2px);
         }
         .container {
+            padding: 5rem 2rem 2rem 2rem;
+            position: relative;
+            min-height: 100vh;
+            box-sizing: border-box;
+            color: white;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+        .container img {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
             padding: 2rem;
+            border-radius: 8px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .falling-sakura {
+            position: absolute;
+            top: -50px; /* Start above the viewport */
+            width: 20px;
+            height: 20px;
+            background-size: cover;
+            animation: fall linear infinite;
         }
         footer {
             background-color: #333;
@@ -51,15 +96,17 @@
             position: fixed;
             width: 100%;
             bottom: 0;
-        }
-        .biotech-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
+            z-index: 1000;
         }
         .hidden {
             display: none;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
     <script>
@@ -70,12 +117,32 @@
             });
             document.getElementById(sectionId).classList.remove('hidden');
         }
+        function createFallingSakura() {
+            var container = document.getElementById('home');
+            var sakuraImages = [
+                'sakura1.png', // Replace with the path to the first sakura flower image
+                'sakura2.png', // Replace with the path to the second sakura flower image
+                'sakura3.png'  // Replace with the path to the third sakura flower image
+            ];
+            for (var i = 0; i < 20; i++) { // Number of flowers
+                var sakura = document.createElement('div');
+                sakura.className = 'falling-sakura';
+                sakura.style.left = Math.random() * window.innerWidth + 'px';
+                sakura.style.animationDuration = Math.random() * 10 + 10 + 's'; // Between 5 and 10 seconds
+                sakura.style.animationDelay = Math.random() * 10 + 's'; // Delay between 0 and 5 seconds
+                sakura.style.backgroundImage = 'url(' + sakuraImages[Math.floor(Math.random() * sakuraImages.length)] + ')';
+                sakura.style.width = (Math.random() * 50 + 40) + 'px'; // Random size between 10px and 30px
+                sakura.style.height = sakura.style.width; // Keep it square
+                container.appendChild(sakura);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            createFallingSakura();
+            showSection('home'); // Show home section by default
+        });
     </script>
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Homepage</h1>
-    </header>
     <nav>
         <ul>
             <li><a href="#home" onclick="showSection('home')">Home</a></li>
@@ -86,30 +153,39 @@
         </ul>
     </nav>
     <div class="container" id="home">
-        <h2>About Me</h2>
-        <p>This section contains information about me and my work in biotechnology.</p>
-        <img src="biotech-image.jpg" alt="Biotechnology Image" class="biotech-image">
+        <img src="biotech-ai-bridge.jpg" alt="Biotechnology to AI Bridge">
+        <div class="content">
+            <h2>About Me</h2>
+            <p>Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala, currently associated with the Graduate School of Engineering Science at Osaka University. My research focuses on the intersection of biotechnology and materials science, specifically in the development of hydrogels and their applications in tissue engineering and regenerative medicine.</p>
+            <p>I have extensively worked on tuning the crosslinking and degradation properties of hyaluronic acid/gelatin hydrogels using hydrogen peroxide, which is pivotal for fabricating muscle cell sheets and modulating cell-cycle progression. My work has contributed to understanding how these hydrogels can influence cell adhesion, proliferation, and differentiation, which are crucial for creating effective biomaterials for medical applications​ (<a href="https://www.adscientificindex.com/scientist.php?id=4866450" target="_blank">AD Scientific Index</a>)​​ (<a href="https://www.mdpi.com/2227-9032/10/4/811" target="_blank">MDPI</a>)​​ (<a href="https://pubs.rsc.org/en/content/articlelanding/2023/SM/D3SM00560G" target="_blank">RSC Publishing</a>)​.</p>
+            <p>Feel free to explore my publications and research contributions through the links provided. If you have any inquiries or wish to collaborate, please don't hesitate to contact me via email or phone.</p>
+        </div>
     </div>
     <div class="container hidden" id="about">
-        <h2>Biography</h2>
-        <p>Here you can find my biography.</p>
+        <img src="biography.jpg" alt="Biography Image">
+        <div class="content">
+            <h2>Biography</h2>
+            <p>Here you can find my biography.</p>
+        </div>
     </div>
     <div class="container hidden" id="services">
-        <h2>Services</h2>
-        <p>Still under construction.</p>
+        <img src="services.jpg" alt="Services Image">
+        <div class="content">
+            <h2>Services</h2>
+            <p>Still under construction.</p>
+        </div>
     </div>
     <div class="container hidden" id="contact">
-        <h2>Contact</h2>
-        <p>Email: kelum@cheng.es.osaka-u.ac.jp</p>
-        <p>Tel: 06-6850-5362</p>
+        <img src="contact.jpg" alt="Contact Image">
+        <div class="content">
+            <h2>Contact</h2>
+            <p>Email: kelum@cheng.es.osaka-u.ac.jp</p>
+            <p>Tel: 06-6850-5362</p>
+        </div>
     </div>
     <footer>
         <p>&copy; 2024 My Homepage. All rights reserved.</p>
         <p><a href="https://www.researchgate.net/profile/Kelum-Elvitigala" target="_blank" style="color: white;">My ResearchGate Profile</a></p>
     </footer>
-    <script>
-        // Show home section by default
-        showSection('home');
-    </script>
 </body>
 </html>
