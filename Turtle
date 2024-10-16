@@ -1,0 +1,42 @@
+import turtle
+
+# Set up the screen
+screen = turtle.Screen()
+screen.bgcolor("white")
+
+# Create the turtle object
+t = turtle.Turtle()
+t.shape("turtle")
+t.color("green")
+t.speed(0)  # Fastest drawing speed
+
+# Recursive function to draw the tree
+def draw_tree(branch_length, t):
+    if branch_length > 5:  # Base case: stop when the branch is too short
+        # Draw the trunk
+        t.forward(branch_length)
+        
+        # Create the right branch
+        t.right(20)  # Turn the turtle right by 20 degrees
+        draw_tree(branch_length - 15, t)  # Recursively draw the right branch
+        
+        # Create the left branch
+        t.left(40)  # Turn the turtle left by 40 degrees
+        draw_tree(branch_length - 15, t)  # Recursively draw the left branch
+        
+        # Go back to the previous position
+        t.right(20)  # Reset the turtle's angle
+        t.backward(branch_length)  # Move the turtle back to the start of the branch
+
+# Initial starting point
+t.left(90)  # Point the turtle upwards
+t.up()
+t.backward(100)
+t.down()
+t.color("brown")
+
+# Draw the tree
+draw_tree(100, t)
+
+# Exit the program when the user clicks on the screen
+screen.exitonclick()
