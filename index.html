@@ -252,16 +252,16 @@
 
         // For displaying temperature (you can fetch this data later using an API)
         //function displayTemperature() {
-            const temperatureElement = document.querySelector('.temperature');
+            //const temperatureElement = document.querySelector('.temperature');
             // Assuming we get the temperature from an API
-            const temp = '22°C'; // This will be dynamic once you connect it with an API
-            temperatureElement.innerHTML = `<h3>Temperature</h3> <p>Osaka: ${temp}</p>`;
+            //const temp = '22°C'; // This will be dynamic once you connect it with an API
+            //temperatureElement.innerHTML = `<h3>Temperature</h3> <p>Osaka: ${temp}</p>`;
         }
 
         document.addEventListener('DOMContentLoaded', function () {
             createFallingItems();
             displayCalendar();
-            //displayTemperature();
+            displayTemperature();
             showSection('home'); // Show home section by default
             document.getElementById("defaultTab").click(); // Open default tab on load
         });
