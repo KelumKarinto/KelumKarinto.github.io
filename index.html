@@ -5,15 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Homepage</title>
     <style>
-        @keyframes fall {
-            0% { transform: translateY(-100px); }
-            100% { transform: translateY(100vh); }
-        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Prevent scroll bars */
+            overflow-x: hidden;
         }
         nav {
             margin: 0;
@@ -43,50 +39,53 @@
             background-color: #333;
             border: 1px solid #061161;
             border-radius: 4px;
-            box-shadow: 0 5px #780206;
             transition: all 0.3s ease;
         }
         nav ul li a:hover {
             background-color: #575757;
-            box-shadow: 0 3px #9b1d2e;
-            transform: translateY(2px);
         }
         .container {
             padding: 5rem 2rem 2rem 2rem;
-            position: relative;
             min-height: 100vh;
-            box-sizing: border-box;
-            color: white;
-            margin: 0 auto;
-            max-width: 100%;
-        }
-        .container img {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            opacity: 0.3;
+            background-color: #f9f9f9;
         }
         .content {
-            position: relative;
-            z-index: 10;
-            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+            background-color: rgba(0, 0, 0, 0.6);
             padding: 2rem;
             border-radius: 8px;
             max-width: 800px;
             margin: auto;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: white;
         }
-        .falling-items {
-            position: absolute;
-            top: -50px;
-            width: 20px;
-            height: 20px;
-            background-size: cover;
-            animation: fall linear infinite;
+        .research-area {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .research-area h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .research-area p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #d0d0d0;
+            margin-bottom: 20px;
+        }
+        .media {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .media img, .media video {
+            max-width: 45%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
         footer {
             background-color: #333;
@@ -96,94 +95,6 @@
             position: fixed;
             width: 100%;
             bottom: 0;
-            z-index: 1000;
-        }
-        .hidden {
-            display: none;
-        }
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        /* Add Tabs in Home Section */
-        .tab-container {
-            display: flex;
-            flex-direction: row;
-            margin-top: 2rem;
-        }
-        .tab {
-            width: 200px;
-            background-color: #333;
-            display: flex;
-            flex-direction: column;
-            padding: 1rem;
-        }
-        .tab button {
-            background-color: inherit;
-            color: white;
-            padding: 10px;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 16px;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .tab button:hover {
-            background-color: #575757;
-        }
-        .tab button.active {
-            background-color: #4CAF50;
-        }
-        .tab-content {
-            flex-grow: 1;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            display: none; /* Hidden by default */
-        }
-        .tab-content.active {
-            display: block;
-        }
-        /* Translate button */
-        #translateBtn {
-            position: fixed;
-            top: 50px;
-            right: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 14px;
-            border-radius: 5px;
-            z-index: 1000;
-        }
-        #translateBtn:hover {
-            background-color: #45a049;
-        }
-        /* Calendar and Temperature Sidebar */
-        .calendar {
-            position: fixed;
-            top: 10%;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .temperature {
-            position: fixed;
-            top: 30%;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
         }
     </style>
     <script>
@@ -253,8 +164,8 @@
         // For displaying temperature (you can fetch this data later using an API)
         function displayTemperature() {
             const temperatureElement = document.querySelector('.temperature');
-             //Assuming we get the temperature from an API
-            const temp = '10°C'; // This will be dynamic once you connect it with an API
+            // Assuming we get the temperature from an API
+            const temp = '22°C'; // This will be dynamic once you connect it with an API
             temperatureElement.innerHTML = `<h3>Temperature</h3> <p>Osaka: ${temp}</p>`;
         }
 
@@ -302,111 +213,94 @@
 <body>
     <nav>
         <ul>
-            <li><a href="javascript:void(0)" onclick="showSection('home')" data-lang-en="Home" data-lang-ja="ホーム">Home</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('about')" data-lang-en="Biography" data-lang-ja="バイオグラフィー">Biography</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('activity')" data-lang-en="Activity" data-lang-ja="活動">Activity</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('contact')" data-lang-en="Contact" data-lang-ja="連絡先">Contact</a></li>
-            <li><a href="https://www.researchgate.net/profile/Kelum-Elvitigala" target="_blank" data-lang-en="Publications" data-lang-ja="出版物">Publications</a></li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">Biography</a></li>
+            <li><a href="#activity">Activity</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="https://www.researchgate.net/profile/Kelum-Elvitigala" target="_blank">Publications</a></li>
         </ul>
     </nav>
 
-    <!-- Button for toggling Japanese/English translation -->
-    <button id="translateBtn" onclick="toggleTranslation()">日本語</button>
-
     <div class="container" id="home">
-        <img src="biotech-ai-bridge.jpg" alt="Biotechnology to AI Bridge">
         <div class="content">
-            <h2 data-lang-en="About Me" data-lang-ja="私について">About Me</h2>
-            <p data-lang-en="Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala, currently associated with at The University of Osaka. My research focuses on the intersection of biotechnology and materials science, specifically in the development of hydrogels and their applications in tissue engineering and regenerative medicine."
-               data-lang-ja="私のホームページへようこそ！私は大阪大学工学研究科に所属しているケルム・チャマラ・マノージュ・ラクマル・エルビティガラです。私の研究は、バイオテクノロジーと材料科学の交差点に焦点を当てており、特に組織工学と再生医療への応用におけるハイドロゲルの開発に関するものです。">Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala...</p>
+            <h2>About Me</h2>
+            <p>Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala, currently associated with Osaka University. My research focuses on the intersection of biotechnology and materials science, specifically in the development of hydrogels and their applications in tissue engineering and regenerative medicine.</p>
 
-            <!-- Tab Container with Tabs and Content -->
-            <div class="tab-container">
-                <div class="tab">
-                    <button class="tablinks" onclick="openTab(event, 'Occupation')" id="defaultTab" data-lang-en="Occupation" data-lang-ja="職業">Occupation</button>
-                    <button class="tablinks" onclick="openTab(event, 'LinkedIn')" data-lang-en="LinkedIn" data-lang-ja="LinkedIn">LinkedIn</button>
-                    <button class="tablinks" onclick="openTab(event, 'ORCID')" data-lang-en="ORCID" data-lang-ja="ORCID">ORCID</button>
+            <!-- Research Areas Section -->
+            <h2>Research Areas</h2>
+
+            <div class="research-area">
+                <h3>1. Hydrogel Fabrication for In-Vitro Cellular Function Analysis</h3>
+                <p>Fabricating hydrogels to analyze cell migration, cell growth, and cell cycle in vitro to better understand cancer cell behavior.</p>
+                <div class="media">
+                    <img src="images/hydrogel_analysis.png" alt="Hydrogel Analysis">
+                    <video controls>
+                        <source src="videos/hydrogel_analysis.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
+            </div>
 
-                <!-- Tab contents -->
-                <div id="Occupation" class="tab-content">
-                    <h3 data-lang-en="Occupation" data-lang-ja="職業">Occupation</h3>
-                    <p data-lang-en="Assistant Professor at Graduate School of Engineering Science, Osaka University."
-                       data-lang-ja="大阪大学工学研究科の助教授。">Assistant Professor at Graduate School of Engineering Science, The University of Osaka.</p>
+            <div class="research-area">
+                <h3>2. In-Vitro Angiogenesis Model Preparation Using Hydrogel</h3>
+                <p>Developing hydrogels to replicate vascular environments for angiogenesis studies.</p>
+                <div class="media">
+                    <img src="images/angiogenesis_model.png" alt="Angiogenesis Model">
+                    <video controls>
+                        <source src="videos/angiogenesis_model.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
+            </div>
 
-                <div id="LinkedIn" class="tab-content">
-                    <h3 data-lang-en="LinkedIn" data-lang-ja="LinkedIn">LinkedIn</h3>
-                    <p data-lang-en="Check my professional profile on LinkedIn: <a href='https://www.linkedin.com/feed/' target='_blank'>https://www.linkedin.com/feed/</a>"
-                       data-lang-ja="LinkedInで私のプロフェッショナルプロフィールをご覧ください：<a href='https://www.linkedin.com/feed/' target='_blank'>https://www.linkedin.com/feed/</a>">Check my professional profile on LinkedIn: <a href='https://www.linkedin.com/feed/' target='_blank'>https://www.linkedin.com/feed/</a></p>
-                </div>
-
-                <div id="ORCID" class="tab-content">
-                    <h3 data-lang-en="ORCID" data-lang-ja="ORCID">ORCID</h3>
-                    <p data-lang-en="My ORCID: <a href='https://orcid.org/0000-0002-9649-0635' target='_blank'>https://orcid.org/0000-0002-9649-0635</a>"
-                       data-lang-ja="私のORCID: <a href='https://orcid.org/0000-0002-9649-0635' target='_blank'>https://orcid.org/0000-0002-9649-0635</a>">My ORCID: <a href='https://orcid.org/0000-0002-9649-0635' target='_blank'>https://orcid.org/0000-0002-9649-0635</a></p>
+            <div class="research-area">
+                <h3>3. Cell Sheet Fabrication Using Hydrogel</h3>
+                <p>Creating re-adhesive, differentiation-capable cell sheets using hydrogel for regenerative medicine.</p>
+                <div class="media">
+                    <img src="images/cell_sheet_fabrication.png" alt="Cell Sheet Fabrication">
+                    <video controls>
+                        <source src="videos/cell_sheet_fabrication.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Biography, Activity, and Contact Sections -->
-    <div class="container hidden" id="about">
-        <img src="biography.jpg" alt="Biography Image">
+    <div class="container" id="about">
         <div class="content">
-            <h2 data-lang-en="Biography" data-lang-ja="バイオグラフィー">Biography</h2>
-            <p><strong data-lang-en="Educational Background" data-lang-ja="学歴">Educational Background</strong></p>
+            <h2>Biography</h2>
+            <p><strong>Educational Background</strong></p>
             <ul>
-                <li data-lang-en="2009: Graduated from Asoka College, Sri Lanka (High School)"
-                    data-lang-ja="2009年：スリランカ、アソカ・カレッジ卒業（高校）">2009: Graduated from Asoka College, Sri Lanka (High School)</li>
-                <li data-lang-en="2011: Enrolled at College of Chemical Sciences, Sri Lanka"
-                    data-lang-ja="2011年：スリランカ化学科学カレッジ入学">2011: Enrolled at College of Chemical Sciences, Sri Lanka</li>
-                <li data-lang-en="2014: Graduated from College of Chemical Sciences, Sri Lanka with a Bachelor's degree in Chemistry"
-                    data-lang-ja="2014年：スリランカ化学科学カレッジ卒業（化学学士号取得）">2014: Graduated from College of Chemical Sciences, Sri Lanka with a Bachelor's degree in Chemistry</li>
-                <li data-lang-en="2015: Enrolled at Postgraduate Institute of Sciences, University of Peradeniya, Sri Lanka"
-                    data-lang-ja="2015年：スリランカ、ペラデニア大学、大学院科学研究所に入学">2015: Enrolled at Postgraduate Institute of Sciences, University of Peradeniya, Sri Lanka</li>
-                <li data-lang-en="2017: Graduated from Postgraduate Institute of Sciences, University of Peradeniya with a Master's degree in Nanoscience & Nanotechnology"
-                    data-lang-ja="2017年：スリランカ、ペラデニア大学、大学院科学研究所卒業（ナノサイエンス＆ナノテクノロジー修士号取得）">2017: Graduated from Postgraduate Institute of Sciences, University of Peradeniya with a Master's degree in Nanoscience & Nanotechnology</li>
-                <li data-lang-en="2017: Enrolled at Graduate School of Engineering Science, Osaka University, Japan"
-                    data-lang-ja="2017年：日本、大阪大学工学研究科に入学">2017: Enrolled at Graduate School of Engineering Science, Osaka University, Japan</li>
-                <li data-lang-en="2020: Re-enrolled at Graduate School of Engineering Science, Osaka University, Japan"
-                    data-lang-ja="2020年：日本、大阪大学工学研究科に再入学">2020: Re-enrolled at Graduate School of Engineering Science, Osaka University, Japan</li>
-                <li data-lang-en="2023: Graduated with a PhD in Engineering from Osaka University, Japan"
-                    data-lang-ja="2023年：日本、大阪大学工学研究科博士課程卒業（工学博士号取得）">2023: Graduated with a PhD in Engineering from Osaka University, Japan</li>
+                <li>2009: Graduated from Asoka College, Sri Lanka (High School)</li>
+                <li>2011: Enrolled at College of Chemical Sciences, Sri Lanka</li>
+                <li>2014: Graduated from College of Chemical Sciences, Sri Lanka with a Bachelor's degree in Chemistry</li>
+                <li>2017: Graduated with a PhD in Engineering from Osaka University, Japan</li>
             </ul>
-            <h3 data-lang-en="Achievements" data-lang-ja="実績">Achievements</h3>
+            <h3>Achievements</h3>
             <ul>
-                <li data-lang-en="2024: Best Poster award for the 55th Autumn Meeting of the Society of Chemical Engineering Japan"
-                    data-lang-ja="2024年：化学工学会第55回秋季大会での最優秀ポスター賞受賞">2024: Best Poster award for the 55th Autumn Meeting of the Society of Chemical Engineering Japan</li>
+                <li>2024: Best Poster award for the 55th Autumn Meeting of the Society of Chemical Engineering Japan</li>
             </ul>
-        </div>
-    </div>    
-
-    <div class="container hidden" id="activity">
-        <img src="activity.jpg" alt="Activity Image">
-        <div class="content">
-            <h2 data-lang-en="Activity" data-lang-ja="活動">Activity</h2>
-            <p data-lang-en="Still under construction." data-lang-ja="まだ構築中です。">Still under construction.</p>
         </div>
     </div>
 
-    <div class="container hidden" id="contact">
-        <img src="contact.jpg" alt="Contact Image">
+    <div class="container" id="activity">
         <div class="content">
-            <h2 data-lang-en="Contact" data-lang-ja="連絡先">Contact</h2>
-            <p data-lang-en="Email: kelum@cheng.es.osaka-u.ac.jp"
-               data-lang-ja="メール: kelum@cheng.es.osaka-u.ac.jp">Email: kelum@cheng.es.osaka-u.ac.jp</p>
-            <p data-lang-en="Tel: 06-6850-5362" data-lang-ja="電話: 06-6850-5362">Tel: 06-6850-5362</p>
+            <h2>Activity</h2>
+            <p>Still under construction.</p>
         </div>
     </div>
 
-    <!-- Sidebar Calendar and Temperature -->
-    <div class="calendar"></div>
-    <div class="temperature"></div>
+    <div class="container" id="contact">
+        <div class="content">
+            <h2>Contact</h2>
+            <p>Email: kelum@cheng.es.osaka-u.ac.jp</p>
+            <p>Tel: 06-6850-5362</p>
+        </div>
+    </div>
 
     <footer>
-        <p>&copy; Well come to my homepage. All rights reserved.</p>
-        <p><a href="https://www.researchgate.net/profile/Kelum-Elvitigala" target="_blank" style="color: white;"></a></p>
+        <p>&copy; 2024 Kelum Chamara Manoj Lakmal Elvitigala. All rights reserved.</p>
     </footer>
 </body>
 </html>
