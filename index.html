@@ -13,7 +13,6 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            /* Allow scrolling by removing overflow: hidden */
         }
         nav {
             margin: 0;
@@ -73,20 +72,12 @@
         .content {
             position: relative;
             z-index: 10;
-            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+            background-color: rgba(0, 0, 0, 0.6);
             padding: 2rem;
             border-radius: 8px;
             max-width: 800px;
             margin: auto;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        .falling-items {
-            position: absolute;
-            top: -50px;
-            width: 20px;
-            height: 20px;
-            background-size: cover;
-            animation: fall linear infinite;
         }
         footer {
             background-color: #333;
@@ -100,13 +91,6 @@
         }
         .hidden {
             display: none;
-        }
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
         }
         /* Add Tabs in Home Section */
         .tab-container {
@@ -144,88 +128,69 @@
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.1);
             color: white;
-            display: none; /* Hidden by default */
+            display: none;
         }
         .tab-content.active {
             display: block;
         }
-        /* Translate button */
-        #translateBtn {
-            position: fixed;
-            top: 50px;
-            right: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 14px;
-            border-radius: 5px;
-            z-index: 1000;
-        }
-        #translateBtn:hover {
-            background-color: #45a049;
-        }
-        /* Calendar and Temperature Sidebar */
-        .calendar {
-            position: fixed;
-            top: 10%;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .temperature {
-            position: fixed;
-            top: 30%;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
+        .falling-items {
+            position: absolute;
+            top: -50px;
+            width: 20px;
+            height: 20px;
+            background-size: cover;
+            animation: fall linear infinite;
         }
     </style>
     <script>
-        let currentLanguage = 'en';
+        document.addEventListener("DOMContentLoaded", function () {
+            const defaultTab = document.querySelector(".tab button");
+            if (defaultTab) {
+                defaultTab.click();
+            }
+            createFallingItems();
+        });
 
-        function toggleTranslation() {
-            const elements = document.querySelectorAll('[data-lang-en], [data-lang-ja]');
-            elements.forEach(el => {
-                if (currentLanguage === 'en') {
-                    el.innerHTML = el.getAttribute('data-lang-ja');
-                } else {
-                    el.innerHTML = el.getAttribute('data-lang-en');
-                }
+        function showSection(sectionId) {
+            var sections = document.querySelectorAll('.container');
+            sections.forEach(function (section) {
+                section.classList.add('hidden');
             });
-
-            currentLanguage = currentLanguage === 'en' ? 'ja' : 'en';
-            document.getElementById('translateBtn').innerText = currentLanguage === 'en' ? '日本語' : 'English';
+            document.getElementById(sectionId).classList.remove('hidden');
         }
 
-        // Function to determine the season and falling item
+        function openTab(evt, tabName) {
+            var tabcontent = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+
+            var tablinks = document.getElementsByClassName("tablinks");
+            for (var i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
         function getSeasonalFallingItem() {
-            const month = new Date().getMonth() + 1; // Get current month (1-12)
+            const month = new Date().getMonth() + 1;
             let items = [];
             if (month >= 3 && month <= 5) {
-                // Spring - Sakura
                 items = ['sakura1.png', 'sakura2.png', 'sakura3.png'];
             } else if (month >= 6 && month <= 8) {
-                // Summer - Sunflowers
                 items = ['sunflower1.png', 'sunflower2.png'];
             } else if (month >= 9 && month <= 11) {
-                // Autumn - Leaves
                 items = ['leaf1.png', 'leaf2.png', 'leaf3.png'];
             } else {
-                // Winter - Snowflakes
                 items = ['snowflake1.png', 'snowflake2.png'];
             }
             return items;
         }
 
-        // Function to create the falling items based on season
         function createFallingItems() {
-            const container = document.getElementById('home');
+            const container = document.body;
             const items = getSeasonalFallingItem();
             for (let i = 0; i < 20; i++) {
                 const item = document.createElement('div');
@@ -239,237 +204,64 @@
                 container.appendChild(item);
             }
         }
-
-        // Display the calendar and current date
-        function displayCalendar() {
-            const calendarElement = document.querySelector('.calendar');
-            const date = new Date();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            const year = date.getFullYear();
-            calendarElement.innerHTML = <h3>Calendar</h3> <p>${year}/${month}/${day}</p>;
-        }
-
-        // For displaying temperature (you can fetch this data later using an API)
-        function displayTemperature() {
-            const temperatureElement = document.querySelector('.temperature');
-            // Assuming we get the temperature from an API
-            const temp = '10°C'; // This will be dynamic once you connect it with an API
-            temperatureElement.innerHTML = <h3>Temperature</h3> <p>Osaka: ${temp}</p>;
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            createFallingItems();
-            displayCalendar();
-            displayTemperature();
-            showSection('home'); // Show home section by default
-            document.getElementById("defaultTab").click(); // Open default tab on load
-        });
-
-        // Function to show the corresponding section
-        function showSection(sectionId) {
-            // Hide all sections first
-            var sections = document.querySelectorAll('.container');
-            sections.forEach(function (section) {
-                section.classList.add('hidden');
-            });
-
-            // Show the clicked section
-            document.getElementById(sectionId).classList.remove('hidden');
-        }
-
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-
-            // Hide all tab content
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-
-            // Remove the active class from all buttons
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-
-            // Show the current tab and add an "active" class to the clicked button
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
     </script>
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="javascript:void(0)" onclick="showSection('home')" data-lang-en="Home" data-lang-ja="ホーム">Home</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('about')" data-lang-en="Biography" data-lang-ja="バイオグラフィー">Biography</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('activity')" data-lang-en="Activity" data-lang-ja="活動">Activity</a></li>
-            <li><a href="javascript:void(0)" onclick="showSection('contact')" data-lang-en="Contact" data-lang-ja="連絡先">Contact</a></li>
-            <li><a href="https://www.researchgate.net/profile/Kelum-Elvitigala" target="_blank" data-lang-en="Publications" data-lang-ja="出版物">Publications</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('home')">Home</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('about')">Biography</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('activity')">Activity</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('contact')">Contact</a></li>
+            <li><a href="https://www.researchgate.net/profile/Kelum-Elvitigala" target="_blank">Publications</a></li>
         </ul>
     </nav>
-
-    <!-- Button for toggling Japanese/English translation -->
-    <button id="translateBtn" onclick="toggleTranslation()">日本語</button>
 
     <div class="container" id="home">
         <img src="biotech-ai-bridge.jpg" alt="Biotechnology to AI Bridge">
         <div class="content">
-            <h2 data-lang-en="About Me" data-lang-ja="私について">About Me</h2>
-            <p data-lang-en="Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala, currently associated with Osaka University. My research focuses on the intersection of biotechnology and materials science, specifically in the development of hydrogels and their applications in tissue engineering and regenerative medicine."
-               data-lang-ja="私のホームページへようこそ！私は大阪大学工学研究科に所属しているケルム・チャマラ・マノージュ・ラクマル・エルビティガラです。私の研究は、バイオテクノロジーと材料科学の交差点に焦点を当てており、特に組織工学と再生医療への応用におけるハイドロゲルの開発に関するものです。">Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala...</p>
-    
-            <!-- Research Areas Section -->
-            <h2 data-lang-en="Research Areas" data-lang-ja="研究分野">Research Areas</h2>
-    
-            <div class="research-area">
-                <h3 data-lang-en="1. Hydrogel Fabrication for In-Vitro Cellular Function Analysis" data-lang-ja="1. 細胞機能分析のためのハイドロゲルの製造">1. Hydrogel Fabrication for In-Vitro Cellular Function Analysis</h3>
-                <p data-lang-en="Fabricating hydrogels to analyze cell migration, cell growth, and cell cycle in vitro to better understand cancer cell behavior." 
-                   data-lang-ja="細胞移動、細胞成長、細胞周期を分析するためのハイドロゲルを製造し、がん細胞の挙動をよりよく理解します。">Fabricating hydrogels to analyze cell migration, cell growth, and cell cycle...</p>
-                <div class="media">
-                    <img src="images/hydrogel_analysis.png" alt="Hydrogel Analysis">
-                    <video controls>
-                        <source src="videos/hydrogel_analysis.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+            <h2>About Me</h2>
+            <p>Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala...</p>
+            <div class="tab-container">
+                <div class="tab">
+                    <button class="tablinks" onclick="openTab(event, 'Occupation')">Occupation</button>
+                    <button class="tablinks" onclick="openTab(event, 'LinkedIn')">LinkedIn</button>
+                    <button class="tablinks" onclick="openTab(event, 'ORCID')">ORCID</button>
                 </div>
-            </div>
-    
-            <div class="research-area">
-                <h3 data-lang-en="2. In-Vitro Angiogenesis Model Preparation Using Hydrogel" data-lang-ja="2. ハイドロゲルを使用した血管新生モデルの作成">2. In-Vitro Angiogenesis Model Preparation Using Hydrogel</h3>
-                <p data-lang-en="Developing hydrogels to replicate vascular environments for angiogenesis studies."
-                   data-lang-ja="血管環境を再現するためのハイドロゲルを開発し、血管新生研究を支援します。">Developing hydrogels to replicate vascular environments...</p>
-                <div class="media">
-                    <img src="images/angiogenesis_model.png" alt="Angiogenesis Model">
-                    <video controls>
-                        <source src="videos/angiogenesis_model.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+
+                <div id="Occupation" class="tab-content">
+                    <h3>Occupation</h3>
+                    <p>Assistant Professor at Graduate School of Engineering Science, Osaka University.</p>
                 </div>
-            </div>
-    
-            <div class="research-area">
-                <h3 data-lang-en="3. Cell Sheet Fabrication Using Hydrogel" data-lang-ja="3. ハイドロゲルを用いた細胞シートの作製">3. Cell Sheet Fabrication Using Hydrogel</h3>
-                <p data-lang-en="Creating re-adhesive, differentiation-capable cell sheets using hydrogel for regenerative medicine."
-                   data-lang-ja="再生医療のための接着可能で分化可能な細胞シートをハイドロゲルを用いて作製します。">Creating re-adhesive, differentiation-capable cell sheets using hydrogel...</p>
-                <div class="media">
-                    <img src="images/cell_sheet_fabrication.png" alt="Cell Sheet Fabrication">
-                    <video controls>
-                        <source src="videos/cell_sheet_fabrication.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                <div id="LinkedIn" class="tab-content">
+                    <h3>LinkedIn</h3>
+                    <p>Check my professional profile on LinkedIn.</p>
                 </div>
-            </div>
-        </div>
-    </div><div class="container" id="home">
-        <img src="biotech-ai-bridge.jpg" alt="Biotechnology to AI Bridge">
-        <div class="content">
-            <h2 data-lang-en="About Me" data-lang-ja="私について">About Me</h2>
-            <p data-lang-en="Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala, currently associated with Osaka University. My research focuses on the intersection of biotechnology and materials science, specifically in the development of hydrogels and their applications in tissue engineering and regenerative medicine."
-               data-lang-ja="私のホームページへようこそ！私は大阪大学工学研究科に所属しているケルム・チャマラ・マノージュ・ラクマル・エルビティガラです。私の研究は、バイオテクノロジーと材料科学の交差点に焦点を当てており、特に組織工学と再生医療への応用におけるハイドロゲルの開発に関するものです。">Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala...</p>
-    
-            <!-- Research Areas Section -->
-            <h2 data-lang-en="Research Areas" data-lang-ja="研究分野">Research Areas</h2>
-    
-            <div class="research-area">
-                <h3 data-lang-en="1. Hydrogel Fabrication for In-Vitro Cellular Function Analysis" data-lang-ja="1. 細胞機能分析のためのハイドロゲルの製造">1. Hydrogel Fabrication for In-Vitro Cellular Function Analysis</h3>
-                <p data-lang-en="Fabricating hydrogels to analyze cell migration, cell growth, and cell cycle in vitro to better understand cancer cell behavior." 
-                   data-lang-ja="細胞移動、細胞成長、細胞周期を分析するためのハイドロゲルを製造し、がん細胞の挙動をよりよく理解します。">Fabricating hydrogels to analyze cell migration, cell growth, and cell cycle...</p>
-                <div class="media">
-                    <img src="images/hydrogel_analysis.png" alt="Hydrogel Analysis">
-                    <video controls>
-                        <source src="videos/hydrogel_analysis.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-            </div>
-    
-            <div class="research-area">
-                <h3 data-lang-en="2. In-Vitro Angiogenesis Model Preparation Using Hydrogel" data-lang-ja="2. ハイドロゲルを使用した血管新生モデルの作成">2. In-Vitro Angiogenesis Model Preparation Using Hydrogel</h3>
-                <p data-lang-en="Developing hydrogels to replicate vascular environments for angiogenesis studies."
-                   data-lang-ja="血管環境を再現するためのハイドロゲルを開発し、血管新生研究を支援します。">Developing hydrogels to replicate vascular environments...</p>
-                <div class="media">
-                    <img src="images/angiogenesis_model.png" alt="Angiogenesis Model">
-                    <video controls>
-                        <source src="videos/angiogenesis_model.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-            </div>
-    
-            <div class="research-area">
-                <h3 data-lang-en="3. Cell Sheet Fabrication Using Hydrogel" data-lang-ja="3. ハイドロゲルを用いた細胞シートの作製">3. Cell Sheet Fabrication Using Hydrogel</h3>
-                <p data-lang-en="Creating re-adhesive, differentiation-capable cell sheets using hydrogel for regenerative medicine."
-                   data-lang-ja="再生医療のための接着可能で分化可能な細胞シートをハイドロゲルを用いて作製します。">Creating re-adhesive, differentiation-capable cell sheets using hydrogel...</p>
-                <div class="media">
-                    <img src="images/cell_sheet_fabrication.png" alt="Cell Sheet Fabrication">
-                    <video controls>
-                        <source src="videos/cell_sheet_fabrication.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                <div id="ORCID" class="tab-content">
+                    <h3>ORCID</h3>
+                    <p>My ORCID: <a href="https://orcid.org/0000-0002-9649-0635" target="_blank">ORCID Profile</a></p>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Biography, Activity, and Contact Sections -->
+
     <div class="container hidden" id="about">
-        <img src="biography.jpg" alt="Biography Image">
-        <div class="content">
-            <h2 data-lang-en="Biography" data-lang-ja="バイオグラフィー">Biography</h2>
-            <p><strong data-lang-en="Educational Background" data-lang-ja="学歴">Educational Background</strong></p>
-            <ul>
-                <li data-lang-en="2009: Graduated from Asoka College, Sri Lanka (High School)"
-                    data-lang-ja="2009年：スリランカ、アソカ・カレッジ卒業（高校）">2009: Graduated from Asoka College, Sri Lanka (High School)</li>
-                <li data-lang-en="2011: Enrolled at College of Chemical Sciences, Sri Lanka"
-                    data-lang-ja="2011年：スリランカ化学科学カレッジ入学">2011: Enrolled at College of Chemical Sciences, Sri Lanka</li>
-                <li data-lang-en="2014: Graduated from College of Chemical Sciences, Sri Lanka with a Bachelor's degree in Chemistry"
-                    data-lang-ja="2014年：スリランカ化学科学カレッジ卒業（化学学士号取得）">2014: Graduated from College of Chemical Sciences, Sri Lanka with a Bachelor's degree in Chemistry</li>
-                <li data-lang-en="2015: Enrolled at Postgraduate Institute of Sciences, University of Peradeniya, Sri Lanka"
-                    data-lang-ja="2015年：スリランカ、ペラデニア大学、大学院科学研究所に入学">2015: Enrolled at Postgraduate Institute of Sciences, University of Peradeniya, Sri Lanka</li>
-                <li data-lang-en="2017: Graduated from Postgraduate Institute of Sciences, University of Peradeniya with a Master's degree in Nanoscience & Nanotechnology"
-                    data-lang-ja="2017年：スリランカ、ペラデニア大学、大学院科学研究所卒業（ナノサイエンス＆ナノテクノロジー修士号取得）">2017: Graduated from Postgraduate Institute of Sciences, University of Peradeniya with a Master's degree in Nanoscience & Nanotechnology</li>
-                <li data-lang-en="2017: Enrolled at Graduate School of Engineering Science, Osaka University, Japan"
-                    data-lang-ja="2017年：日本、大阪大学工学研究科に入学">2017: Enrolled at Graduate School of Engineering Science, Osaka University, Japan</li>
-                <li data-lang-en="2020: Re-enrolled at Graduate School of Engineering Science, Osaka University, Japan"
-                    data-lang-ja="2020年：日本、大阪大学工学研究科に再入学">2020: Re-enrolled at Graduate School of Engineering Science, Osaka University, Japan</li>
-                <li data-lang-en="2023: Graduated with a PhD in Engineering from Osaka University, Japan"
-                    data-lang-ja="2023年：日本、大阪大学工学研究科博士課程卒業（工学博士号取得）">2023: Graduated with a PhD in Engineering from Osaka University, Japan</li>
-            </ul>
-            <h3 data-lang-en="Achievements" data-lang-ja="実績">Achievements</h3>
-            <ul>
-                <li data-lang-en="2024: Best Poster award for the 55th Autumn Meeting of the Society of Chemical Engineering Japan"
-                    data-lang-ja="2024年：化学工学会第55回秋季大会での最優秀ポスター賞受賞">2024: Best Poster award for the 55th Autumn Meeting of the Society of Chemical Engineering Japan</li>
-            </ul>
-        </div>
-    </div>    
+        <h2>Biography</h2>
+        <p>Details about your biography here.</p>
+    </div>
 
     <div class="container hidden" id="activity">
-        <img src="activity.jpg" alt="Activity Image">
-        <div class="content">
-            <h2 data-lang-en="Activity" data-lang-ja="活動">Activity</h2>
-            <p data-lang-en="Still under construction." data-lang-ja="まだ構築中です。">Still under construction.</p>
-        </div>
+        <h2>Activity</h2>
+        <p>Details about your activities here.</p>
     </div>
 
     <div class="container hidden" id="contact">
-        <img src="contact.jpg" alt="Contact Image">
-        <div class="content">
-            <h2 data-lang-en="Contact" data-lang-ja="連絡先">Contact</h2>
-            <p data-lang-en="Email: kelum@cheng.es.osaka-u.ac.jp"
-               data-lang-ja="メール: kelum@cheng.es.osaka-u.ac.jp">Email: kelum@cheng.es.osaka-u.ac.jp</p>
-            <p data-lang-en="Tel: 06-6850-5362" data-lang-ja="電話: 06-6850-5362">Tel: 06-6850-5362</p>
-        </div>
+        <h2>Contact</h2>
+        <p>Email: kelum@cheng.es.osaka-u.ac.jp</p>
     </div>
 
-    <!-- Sidebar Calendar and Temperature -->
-    <div class="calendar"></div>
-    <div class="temperature"></div>
-
     <footer>
-        <p>&copy; Well come to my homepage. All rights reserved.</p>
-        <p><a href="https://www.researchgate.net/profile/Kelum-Elvitigala" target="_blank" style="color: white;"></a></p>
+        <p>&copy; Welcome to my homepage. All rights reserved.</p>
     </footer>
 </body>
 </html>
