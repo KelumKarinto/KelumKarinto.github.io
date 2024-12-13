@@ -54,12 +54,16 @@
         .container {
             padding: 5rem 2rem 2rem 2rem;
             position: relative;
-            min-height: 100vh;
+            min-height: 200vh;
             box-sizing: border-box;
             color: white;
             margin: 0 auto;
             max-width: 100%;
-        }
+            display: block; /* Ensure visibility */
+            visibility: visible; /* Ensure visibility */
+            }
+
+        
         .container img {
             position: fixed;
             top: 0;
@@ -67,19 +71,22 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1;
+            z-index: -2;
             opacity: 0.3;
         }
         .content {
             position: relative;
-            z-index: 10;
+            z-index: 30;
             background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-            padding: 2rem;
+            padding: 4rem;
             border-radius: 8px;
-            max-width: 800px;
+            max-width: 1000px;
             margin: auto;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
+            overflow: visible; /* Ensure all text is visible */
+            height: auto; /* Ensure the height adjusts to content */
+}
+
         .falling-items {
             position: absolute;
             top: -50px;
@@ -112,14 +119,14 @@
         .tab-container {
             display: flex;
             flex-direction: row;
-            margin-top: 2rem;
+            margin-top: 5rem;
         }
         .tab {
-            width: 200px;
+            width: 100px;
             background-color: #333;
             display: flex;
             flex-direction: column;
-            padding: 1rem;
+            padding: 0.1rem;
         }
         .tab button {
             background-color: inherit;
@@ -152,7 +159,7 @@
         /* Translate button */
         #translateBtn {
             position: fixed;
-            top: 50px;
+            top: 30px;  
             right: 10px;
             background-color: #4CAF50;
             color: white;
@@ -167,7 +174,9 @@
             background-color: #45a049;
         }
         /* Calendar and Temperature Sidebar */
-        .calendar {
+        
+            
+        #calendar-container {
             position: fixed;
             top: 10%;
             left: 10px;
@@ -175,7 +184,71 @@
             color: white;
             padding: 10px;
             border-radius: 5px;
-        }
+            text-align: center;
+            width: 280px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000; /* Ensure it stays above other elements */
+}
+
+
+            #calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            }
+
+        #calendar-header button {
+            background-color: #575757;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            }
+
+        #calendar-header button:hover {
+            background-color: #4CAF50;
+            }
+
+        #current-month {
+            font-weight: bold;
+            }
+
+        #calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+            }
+
+        #calendar-table th, #calendar-table td {
+            border: 1px solid #575757;
+            padding: 5px;
+            text-align: center;
+            }           
+
+        #calendar-table td:hover {
+            background-color: #4CAF50;
+            cursor: pointer;
+            }
+
+            #digital-clock {
+            margin-bottom: 0px;
+            padding: 1px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
+            font-size: 24px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            }
+        #japan-digital-time {
+            font-size: 18px;
+            font-weight: bold;
+            }
+
+
+            
+        
         .temperature {
             position: fixed;
             top: 30%;
@@ -375,17 +448,50 @@ document.addEventListener('DOMContentLoaded', function () {
             <!-- Tab Container with Tabs and Content -->
             <div class="tab-container">
                 <div class="tab">
-                    <button class="tablinks" onclick="openTab(event, 'Occupation')" id="defaultTab" data-lang-en="Occupation" data-lang-ja="職業">Occupation</button>
+                    <!-- Add "active" class to Occupation tab by default -->
+                    <button class="tablinks active" onclick="openTab(event, 'Occupation')" id="defaultTab" data-lang-en="Occupation" data-lang-ja="職業">Occupation</button>
                     <button class="tablinks" onclick="openTab(event, 'LinkedIn')" data-lang-en="LinkedIn" data-lang-ja="LinkedIn">LinkedIn</button>
                     <button class="tablinks" onclick="openTab(event, 'ORCID')" data-lang-en="ORCID" data-lang-ja="ORCID">ORCID</button>
                 </div>
-
-                <!-- Tab contents -->
-                <div id="Occupation" class="tab-content">
+            
+                <!-- Make the Occupation content visible by default -->
+                <div id="Occupation" class="tab-content active" style="display: block;">
                     <h3 data-lang-en="Occupation" data-lang-ja="職業">Occupation</h3>
                     <p data-lang-en="Assistant Professor at Graduate School of Engineering Science, Osaka University."
-                       data-lang-ja="大阪大学工学研究科の助教授。">Assistant Professor at Graduate School of Engineering Science, Osaka University.</p>
+                       data-lang-ja="大阪大学工学研究科の助教授。">
+                       Assistant Professor at Graduate School of Engineering Science and Global Center for Medical Engineering and Informatics, Osaka University.
+                    </p>
+                    <ul>
+                        <li>
+                            <a href="https://mei.osaka-u.ac.jp/" target="_blank" data-lang-en="Graduate School of Engineering Science, Osaka University"
+                               data-lang-ja="大阪大学工学研究科">Global Center for Medical Engineering and Informatics, Osaka University</a>
+                        </li>
+                        <li>
+                            <a href="http://www.cheng.es.osaka-u.ac.jp/sakailabo/home.html" target="_blank" data-lang-en="Sakai Laboratory"
+                               data-lang-ja="境研究室">Sakai Laboratory, Graduate School of Engineering Science, Osaka University</a>
+                        </li>
+                    </ul>
                 </div>
+            
+                <!-- Other Tab Contents -->
+                <div id="LinkedIn" class="tab-content">
+                    <h3 data-lang-en="LinkedIn" data-lang-ja="LinkedIn">LinkedIn</h3>
+                    <p data-lang-en="Check my professional profile on LinkedIn: <a href='https://www.linkedin.com/feed/' target='_blank'>https://www.linkedin.com/feed/</a>"
+                       data-lang-ja="LinkedInで私のプロフェッショナルプロフィールをご覧ください：<a href='https://www.linkedin.com/feed/' target='_blank'>https://www.linkedin.com/feed/</a>">
+                       Check my professional profile on LinkedIn: <a href='https://www.linkedin.com/feed/' target='_blank'>https://www.linkedin.com/feed/</a>
+                    </p>
+                </div>
+            
+                <div id="ORCID" class="tab-content">
+                    <h3 data-lang-en="ORCID" data-lang-ja="ORCID">ORCID</h3>
+                    <p data-lang-en="My ORCID: <a href='https://orcid.org/0000-0002-9649-0635' target='_blank'>https://orcid.org/0000-0002-9649-0635</a>"
+                       data-lang-ja="私のORCID: <a href='https://orcid.org/0000-0002-9649-0635' target='_blank'>https://orcid.org/0000-0002-9649-0635</a>">
+                       My ORCID: <a href='https://orcid.org/0000-0002-9649-0635' target='_blank'>https://orcid.org/0000-0002-9649-0635</a>
+                    </p>
+                </div>
+            </div>
+            
+                
 
                 <div id="LinkedIn" class="tab-content">
                     <h3 data-lang-en="LinkedIn" data-lang-ja="LinkedIn">LinkedIn</h3>
@@ -453,12 +559,149 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
 
     <!-- Sidebar Calendar and Temperature -->
-    <div class="calendar"></div>
-    <div class="temperature"></div>
+    <div id="calendar-container">
+        <div id="digital-clock">
+            <h3>Japan Osaka</h3>
+            <p id="japan-digital-time"></p>
+        </div>
+        <div id="calendar-header">
+            <button id="prev-month" onclick="changeMonth(-1)">&#9664;</button>
+            <span id="current-month"></span>
+            <button id="next-month" onclick="changeMonth(1)">&#9654;</button>
+        </div>
+        <table id="calendar-table">
+            <thead>
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody id="calendar-body"></tbody>
+        </table>
+    </div>
+    
+    
 
     <footer>
-        <p>&copy; 2024 My Homepage. All rights reserved.</p>
-        <p><a href="https://www.researchgate.net/profile/Kelum-Elvitigala" target="_blank" style="color: white;">My ResearchGate Profile</a></p>
+        <p>&copy; Wellcome To My Homepage. All rights reserved.</p>
+        <p><a href="https://www.researchgate.net/profile/Kelum-Elvitigala" target="_blank" style="color: white;"></a></p>
     </footer>
+    <script>
+        let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+
+// Function to generate the calendar for a given month and year
+function generateCalendar(month, year) {
+    const calendarBody = document.getElementById("calendar-body");
+    calendarBody.innerHTML = ""; // Clear previous content
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDay = new Date(year, month, 1).getDay();
+
+    // Set the current month name
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"];
+    document.getElementById("current-month").textContent = `${monthNames[month]} ${year}`;
+
+    // Create calendar rows
+    let date = 1;
+    for (let i = 0; i < 6; i++) {
+        const row = document.createElement("tr");
+        for (let j = 0; j < 7; j++) {
+            const cell = document.createElement("td");
+            if (i === 0 && j < firstDay) {
+                // Empty cells before the first day of the month
+                cell.innerHTML = "";
+            } else if (date > daysInMonth) {
+                // Empty cells after the last day of the month
+                break;
+            } else {
+                cell.innerHTML = date;
+                // Highlight the current date
+                if (date === new Date().getDate() &&
+                    month === new Date().getMonth() &&
+                    year === new Date().getFullYear()) {
+                    cell.style.backgroundColor = "#4CAF50";
+                    cell.style.color = "white";
+                }
+                date++;
+            }
+            row.appendChild(cell);
+        }
+        calendarBody.appendChild(row);
+    }
+}
+
+// Function to change the displayed month
+function changeMonth(offset) {
+    currentMonth += offset;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    } else if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    generateCalendar(currentMonth, currentYear);
+}
+
+// Function to update the digital clock
+function updateDigitalClock() {
+    const digitalClockElement = document.getElementById("japan-digital-time");
+
+    // Get current time in Japan
+    const now = new Date().toLocaleString("en-US", {
+        timeZone: "Asia/Tokyo",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+    });
+
+    digitalClockElement.textContent = now;
+}
+
+// Initialize everything when the DOM content is loaded
+document.addEventListener("DOMContentLoaded", function () {
+    // Initialize the calendar
+    generateCalendar(currentMonth, currentYear);
+
+    // Initialize the digital clock
+    updateDigitalClock();
+    setInterval(updateDigitalClock, 1000); // Update clock every second
+
+    // Ensure the Home section is visible
+    const homeSection = document.getElementById("home");
+    homeSection.classList.remove("hidden");
+    homeSection.style.display = "block";
+
+    // Activate the default tab in the Home section
+    const defaultTab = document.getElementById("defaultTab");
+    if (defaultTab) {
+        defaultTab.click(); // Simulate a click to activate it
+    }
+
+    // Fix the "About Me" section visibility
+    const aboutMeContent = document.querySelector("#home .content");
+    if (aboutMeContent) {
+        aboutMeContent.style.display = "block";
+        aboutMeContent.style.height = "auto"; // Allow full height based on content
+        aboutMeContent.style.overflow = "visible"; // Prevent clipping
+        aboutMeContent.offsetHeight; // Force repaint
+    }
+
+    console.log("Initialization complete: Calendar, clock, and Home section are ready.");
+});
+
+
+
+
+    </script>
+    
 </body>
 </html>
