@@ -242,13 +242,65 @@
 
         // Display the calendar and current date
         function displayCalendar() {
-            const calendarElement = document.querySelector('.calendar');
-            const date = new Date();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            const year = date.getFullYear();
-            calendarElement.innerHTML = `<h3>Calendar</h3> <p>${year}/${month}/${day}</p>`;
-        }
+    const calendarElement = document.querySelector('.calendar');
+    const date = new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' });
+    const japanDate = new Date(date);
+
+    // Formatting date
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const dayOfWeek = daysOfWeek[japanDate.getDay()];
+    const month = monthsOfYear[japanDate.getMonth()];
+    const day = japanDate.getDate();
+    const year = japanDate.getFullYear();
+
+    // Time formatting
+    let hours = japanDate.getHours();
+    const minutes = japanDate.getMinutes().toString().padStart(2, '0');
+    const seconds = japanDate.getSeconds().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    // Convert to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    hours = hours.toString().padStart(2, '0');
+
+    // Update calendar content with more detailed information
+    calendarElement.innerHTML = `
+        <h3>Japan Time</h3>
+        <p>${dayOfWeek}, ${month} ${day}, ${year}</p>
+        <p id="live-clock">${hours}:${minutes}:${seconds} ${ampm}</p>
+    `;
+}
+
+// Function to update clock in real-time
+function updateClock() {
+    const clockElement = document.getElementById('live-clock');
+    if (clockElement) {
+        const date = new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' });
+        const japanDate = new Date(date);
+
+        let hours = japanDate.getHours();
+        const minutes = japanDate.getMinutes().toString().padStart(2, '0');
+        const seconds = japanDate.getSeconds().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        
+        // Convert to 12-hour format
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        hours = hours.toString().padStart(2, '0');
+
+        clockElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    displayCalendar();
+    // Update clock every second
+    setInterval(updateClock, 1000);
+});
 
         // For displaying temperature (you can fetch this data later using an API)
         function displayTemperature() {
