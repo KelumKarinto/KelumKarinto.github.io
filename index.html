@@ -10,10 +10,10 @@
             100% { transform: translateY(100vh); }
         }
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* Prevent scroll bars */
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Allow vertical scrolling, prevent horizontal */
         }
         nav {
             margin: 0;
@@ -85,7 +85,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             overflow: visible; /* Ensure all text is visible */
             height: auto; /* Ensure the height adjusts to content */
-}
+        }
+
 
         .falling-items {
             position: absolute;
@@ -258,6 +259,55 @@
             padding: 10px;
             border-radius: 5px;
         }
+
+    @keyframes fall {
+        0% { transform: translateY(-100px); }
+        100% { transform: translateY(100vh); }
+    }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Prevent scroll bars */
+    }
+    nav {
+        margin: 0;
+        padding: 1rem;
+        text-align: center;
+        background: linear-gradient(45deg, #160c55, #4b31b5, #bbd2e1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    /* Other existing styles ... */
+
+    /* Updated CSS for scrollable page and research sections */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow-y: auto; /* Allow vertical scrolling, prevent horizontal */
+    }
+
+    .research-section {
+        margin: 2rem 0;
+        text-align: center;
+    }
+
+    .research-section h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .research-section video {
+        width: 90%;
+        max-width: 800px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
     </style>
     <script>
         let currentLanguage = 'en';
@@ -393,15 +443,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Function to show the corresponding section
         function showSection(sectionId) {
-            // Hide all sections first
-            var sections = document.querySelectorAll('.container');
-            sections.forEach(function (section) {
-                section.classList.add('hidden');
-            });
+    // Hide all sections first
+    var sections = document.querySelectorAll('.container');
+    sections.forEach(function (section) {
+        section.style.display = 'none'; // Hide each section
+    });
 
-            // Show the clicked section
-            document.getElementById(sectionId).classList.remove('hidden');
-        }
+    // Show the clicked section
+    const activeSection = document.getElementById(sectionId);
+    if (activeSection) {
+        activeSection.style.display = 'block'; // Display the selected section
+    }
+}
+
 
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
@@ -472,6 +526,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </li>
                     </ul>
                 </div>
+
             
                 <!-- Other Tab Contents -->
                 <div id="LinkedIn" class="tab-content">
@@ -505,6 +560,30 @@ document.addEventListener('DOMContentLoaded', function () {
                        data-lang-ja="私のORCID: <a href='https://orcid.org/0000-0002-9649-0635' target='_blank'>https://orcid.org/0000-0002-9649-0635</a>">My ORCID: <a href='https://orcid.org/0000-0002-9649-0635' target='_blank'>https://orcid.org/0000-0002-9649-0635</a></p>
                 </div>
             </div>
+            <!-- Research Sections -->
+    <div class="research-section" id="section1">
+        <h3>Section 1</h3>
+        <video autoplay muted loop playsinline>
+            <source src="video1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="research-section" id="section2">
+        <h3>Section 2</h3>
+        <video autoplay muted loop playsinline>
+            <source src="video2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="research-section" id="section3">
+        <h3>Section 3</h3>
+        <video autoplay muted loop playsinline>
+            <source src="video3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    
         </div>
     </div>
 
@@ -584,7 +663,28 @@ document.addEventListener('DOMContentLoaded', function () {
             <tbody id="calendar-body"></tbody>
         </table>
     </div>
-    
+    <div class="research-section" id="section1">
+        <h3>Section 1</h3>
+        <video autoplay muted loop playsinline>
+            <source src="video1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="research-section" id="section2">
+        <h3>Section 2</h3>
+        <video autoplay muted loop playsinline>
+            <source src="video2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="research-section" id="section3">
+        <h3>Section 3</h3>
+        <video autoplay muted loop playsinline>
+            <source src="video3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     
 
     <footer>
