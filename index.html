@@ -460,19 +460,29 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Function to show the corresponding section
+        // Function to reset scroll position of the sections
         function showSection(sectionId) {
-    // Hide all sections first
-    var sections = document.querySelectorAll('.container');
-    sections.forEach(function (section) {
-        section.style.display = 'none'; // Hide each section
-    });
+        // Hide all sections
+            const sections = document.querySelectorAll('.container');
+            sections.forEach(function (section) {
+            section.style.display = 'none'; // Hide each section
+            section.scrollTop = 0; // Reset the scroll position of the section
+        });
 
-    // Show the clicked section
-    const activeSection = document.getElementById(sectionId);
-    if (activeSection) {
-        activeSection.style.display = 'block'; // Display the selected section
-    }
-}
+        // Show the selected section
+            const activeSection = document.getElementById(sectionId);
+        if (activeSection) {
+            activeSection.style.display = 'block'; // Display the selected section
+        }
+
+        // Reset the browser scroll position to the top
+            window.scrollTo(0, 0);
+        }
+
+
+
+
+
 
 
         function openTab(evt, tabName) {
