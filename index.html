@@ -52,7 +52,7 @@
             transform: translateY(2px);
         }
         .container {
-            padding: 5rem 2rem 2rem 2rem;
+            padding: 3rem 2rem 2rem 2rem;
             position: relative;
             min-height: 200vh;
             box-sizing: border-box;
@@ -100,7 +100,7 @@
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 1rem;
+            padding: 0.125rem;
             position: fixed;
             width: 100%;
             bottom: 0;
@@ -296,14 +296,32 @@
         text-align: center;
     }
 
+    h2.research-title {
+        text-align: left;
+        margin-left: 20rem; /* Adjust margin as needed */
+        font-size: 2rem; /* Adjust size if needed */
+        text-decoration: underline;
+        margin-bottom: 3rem; /* Increase the space below the title */
+        margin-top: 4rem; /* Increase the space above the title */
+        color: rgb(7, 7, 7); /* Ensure it contrasts with the background */
+    }
+
+    .title-container {
+        text-align: left; /* Align the title to the left */
+        margin-left: 20rem; /* Add space to the left of the title */
+        margin-bottom: 1rem; /* Add space between the title and video */
+    }
+
     .research-section h3 {
         font-size: 1.5rem;
         margin-bottom: 1rem;
+        color: rgb(5, 5, 5);
+        text-align: match-parent;
     }
 
     .research-section video {
         width: 90%;
-        max-width: 800px;
+        max-width: 1000px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
@@ -429,7 +447,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function displayTemperature() {
             const temperatureElement = document.querySelector('.temperature');
             // Assuming we get the temperature from an API
-            const temp = '22°C'; // This will be dynamic once you connect it with an API
+            const temp = '10°C'; // This will be dynamic once you connect it with an API
             temperatureElement.innerHTML = `<h3>Temperature</h3> <p>Osaka: ${temp}</p>`;
         }
 
@@ -497,9 +515,10 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="content">
             <h2 data-lang-en="About Me" data-lang-ja="私について">About Me</h2>
             <p data-lang-en="Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala, currently associated with the Graduate School of Engineering Science at Osaka University. My research focuses on the intersection of biotechnology and materials science, specifically in the development of hydrogels and their applications in tissue engineering and regenerative medicine."
-               data-lang-ja="私のホームページへようこそ！私は大阪大学工学研究科に所属しているケルム・チャマラ・マノージュ・ラクマル・エルビティガラです。私の研究は、バイオテクノロジーと材料科学の交差点に焦点を当てており、特に組織工学と再生医療への応用におけるハイドロゲルの開発に関するものです。">Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala...</p>
+               data-lang-ja="私のホームページへようこそ！私は大阪大学工学研究科に所属しているケルム・チャマラ・マノージュ・ラクマル・エルビティガラです。私の研究は、バイオテクノロジーと材料科学の交差点に焦点を当てており、特に組織工学と再生医療への応用におけるハイドロゲルの開発に関するものです。">Welcome to my homepage! I am Kelum Chamara Manoj Lakmal Elvitigala, currently associated with the Graduate School of Engineering Science at Osaka University. My research focuses on the intersection of biotechnology and materials science, specifically in the development of hydrogels and their applications in tissue engineering and regenerative medicine.</p>
 
-            <!-- Tab Container with Tabs and Content -->
+            
+               <!-- Tab Container with Tabs and Content -->
             <div class="tab-container">
                 <div class="tab">
                     <!-- Add "active" class to Occupation tab by default -->
@@ -511,18 +530,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 <!-- Make the Occupation content visible by default -->
                 <div id="Occupation" class="tab-content active" style="display: block;">
                     <h3 data-lang-en="Occupation" data-lang-ja="職業">Occupation</h3>
-                    <p data-lang-en="Assistant Professor at Graduate School of Engineering Science, Osaka University."
-                       data-lang-ja="大阪大学工学研究科の助教授。">
+                    <p data-lang-en="Assistant Professor at Graduate School of Engineering Science and Global Center for Medical Engineering and Informatics, Osaka University."
+                       data-lang-ja="大阪大学助教授。">
                        Assistant Professor at Graduate School of Engineering Science and Global Center for Medical Engineering and Informatics, Osaka University.
                     </p>
                     <ul>
                         <li>
-                            <a href="https://mei.osaka-u.ac.jp/" target="_blank" data-lang-en="Graduate School of Engineering Science, Osaka University"
-                               data-lang-ja="大阪大学工学研究科">Global Center for Medical Engineering and Informatics, Osaka University</a>
+                            <a href="https://mei.osaka-u.ac.jp/" target="_blank" data-lang-en=", Osaka University"
+                               data-lang-ja="大阪大学国際医工情報センター">Global Center for Medical Engineering and Informatics, Osaka University</a>
                         </li>
                         <li>
                             <a href="http://www.cheng.es.osaka-u.ac.jp/sakailabo/home.html" target="_blank" data-lang-en="Sakai Laboratory"
-                               data-lang-ja="境研究室">Sakai Laboratory, Graduate School of Engineering Science, Osaka University</a>
+                               data-lang-ja="大阪大学基礎工学研究科境研究">Sakai Laboratory, Graduate School of Engineering Science, Osaka University</a>
                         </li>
                     </ul>
                 </div>
@@ -560,31 +579,47 @@ document.addEventListener('DOMContentLoaded', function () {
                        data-lang-ja="私のORCID: <a href='https://orcid.org/0000-0002-9649-0635' target='_blank'>https://orcid.org/0000-0002-9649-0635</a>">My ORCID: <a href='https://orcid.org/0000-0002-9649-0635' target='_blank'>https://orcid.org/0000-0002-9649-0635</a></p>
                 </div>
             </div>
+
+            <h2 class="research-title" data-lang-en="Research" data-lang-ja="研究">Research</h2>
+            
+
             <!-- Research Sections -->
-    <div class="research-section" id="In-vitro Cell Culture Models">
-        <h3>Section 1</h3>
-        <video autoplay muted loop playsinline>
-            <source src="video1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
-    <div class="research-section" id="Angiogenesis">
-        <h3>Section 2</h3>
-        <video autoplay muted loop playsinline>
-            <source src="video2.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
-    <div class="research-section" id="Cell sheet Fabrication">
-        <h3>Section 3</h3>
-        <video autoplay muted loop playsinline>
-            <source src="video3.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    
-        </div>
+            <div class="research-section">
+                <div class="title-container">
+                    <h3>In-vitro Cell Culture Models</h3>
+                </div>
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="video1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            
+            <div class="research-section">
+                <div class="title-container">
+                    <h3>Angiogenesis</h3>
+                </div>
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="video2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            
+            <div class="research-section">
+                <div class="title-container">
+                    <h3>Cell Sheet Fabrication</h3>
+                </div>
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="video3.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+                
     </div>
 
     <!-- Biography, Activity, and Contact Sections -->
@@ -663,28 +698,6 @@ document.addEventListener('DOMContentLoaded', function () {
             <tbody id="calendar-body"></tbody>
         </table>
     </div>
-    <div class="research-section" id="section1">
-        <h3>Section 1</h3>
-        <video autoplay muted loop playsinline>
-            <source src="video1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
-    <div class="research-section" id="section2">
-        <h3>Section 2</h3>
-        <video autoplay muted loop playsinline>
-            <source src="video2.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
-    <div class="research-section" id="section3">
-        <h3>Section 3</h3>
-        <video autoplay muted loop playsinline>
-            <source src="video3.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
     
 
     <footer>
