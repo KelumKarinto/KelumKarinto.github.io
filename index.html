@@ -333,16 +333,23 @@
         function toggleTranslation() {
             const elements = document.querySelectorAll('[data-lang-en], [data-lang-ja]');
             elements.forEach(el => {
-                if (currentLanguage === 'en') {
-                    el.innerHTML = el.getAttribute('data-lang-ja');
-                } else {
-                    el.innerHTML = el.getAttribute('data-lang-en');
-                }
-            });
+        if (currentLanguage === 'en') {
+            el.innerHTML = el.getAttribute('data-lang-ja');
+        } else {
+            el.innerHTML = el.getAttribute('data-lang-en');
+        }
+    });
+
+    // Update the clock and calendar format based on the language
+            const digitalClockElement = document.getElementById("japan-digital-time");
+        if (digitalClockElement) {
+        updateDigitalClock(currentLanguage === 'en' ? 'ja' : 'en');
+        }
 
             currentLanguage = currentLanguage === 'en' ? 'ja' : 'en';
             document.getElementById('translateBtn').innerText = currentLanguage === 'en' ? '日本語' : 'English';
-        }
+    }
+
 
         // Function to determine the season and falling item
         function getSeasonalFallingItem() {
@@ -685,7 +692,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <!-- Sidebar Calendar and Temperature -->
     <div id="calendar-container">
         <div id="digital-clock">
-            <h3>Japan Osaka</h3>
+            <h3 id="japan-location" data-lang-en="Japan, Osaka" data-lang-ja="日本、大阪">Japan, Osaka</h3>
             <p id="japan-digital-time"></p>
         </div>
         <div id="calendar-header">
@@ -774,11 +781,11 @@ function changeMonth(offset) {
 }
 
 // Function to update the digital clock
-function updateDigitalClock() {
+    function updateDigitalClock(language) {
     const digitalClockElement = document.getElementById("japan-digital-time");
 
-    // Get current time in Japan
-    const now = new Date().toLocaleString("en-US", {
+    // Get the current time in Japan
+        const now = new Date().toLocaleString(language === 'ja' ? "ja-JP" : "en-US", {
         timeZone: "Asia/Tokyo",
         hour: "2-digit",
         minute: "2-digit",
@@ -788,6 +795,7 @@ function updateDigitalClock() {
 
     digitalClockElement.textContent = now;
 }
+
 
 // Initialize everything when the DOM content is loaded
 document.addEventListener("DOMContentLoaded", function () {
